@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  </head>
+  <body>
+    <header>
+        <h1>My Book API</h1>
+    </header>
+
+    <div class="nav-links">
+        <p>Add a new book <a href="/add_book">here</a>.</p>
+        <p>Add a new author <a href="/add_author">here</a>.</p>
+    </div>
+
+    <div class="search-bar">
+    <form action="/" method="get">
+        <input type="text" name="search" placeholder="Search books..." value="{{ search_query }}">
+        <button type="submit">Search</button>
+    </form>
+</div>
+
+    <div class="sort-options">
+        <span>Sortieren nach:</span>
+        <a href="/?sort_by=title" {% if sort_by == 'title' %}class="active"{% endif %}>Titel</a> |
+        <a href="/?sort_by=year" {% if sort_by == 'year' %}class="active"{% endif %}>Erscheinungsjahr</a> |
+        <a href="/?sort_by=author" {% if sort_by == 'author' %}class="active"{% endif %}>Autor</a>
+    </div>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flash-messages">
+          {% for category, message in messages %}
+            <div class="flash {{ category }}">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <div class="book-container">
+        {% for book in books %}
+        <div class="book-card">
+            <img src="{{ book.cover_url }}" alt="Cover von {{ book.title }}">
+            <div class="book-title">{{ book.title }}</div>
+            <div class="book-author">{{ book.author.name }}</div>
+            <div class="book-year">{{ book.publication_year}}</div>
+
+            <form action="{{ url_for('delete_book', book_id=book.id) }}" method="POST">
+                <button type="submit" class="delete-btn">Delete Book</button>
+            </form>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

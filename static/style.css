@@ -1,0 +1,121 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background-color: #f8f9fa;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+header h1 {
+    font-size: 32px;
+    color: #333;
+    margin: 0;
+}
+
+.nav-links {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.nav-links p {
+    margin: 5px 0;
+}
+
+.search-bar {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.search-bar input[type="text"] {
+    padding: 5px;
+    width: 200px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.search-bar button {
+    padding: 5px 10px;
+    margin-left: 5px;
+    border-radius: 5px;
+    border: none;
+    background-color: #007BFF;
+    color: white;
+}
+
+.sort-options {
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 16px;
+}
+
+.sort-options a {
+    margin-left: 5px;
+    text-decoration: none;
+    color: #007BFF;
+}
+
+.book-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.book-card {
+    width: 150px;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    background-color: #fff;
+}
+
+
+.book-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+
+.book-title {
+    font-size: 16px;
+    margin: 10px 0 5px 0;
+    font-weight: bold;
+    color: #222;
+}
+
+.book-author {
+    font-size: 14px;
+    color: #555;
+}
+
+.book-year {
+    font-size: 13px;
+    color: #777;
+}
+
+.flash-messages {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.flash {
+    padding: 10px;
+    margin: 5px auto;
+    display: inline-block;
+    border-radius: 5px;
+}
+
+.delete-btn {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+}
+
+
