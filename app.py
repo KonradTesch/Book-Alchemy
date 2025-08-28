@@ -13,12 +13,23 @@ app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{os.path.join(basedir, 'data
 
 db.init_app(app)
 
+
 def setup_database():
+    """
+    Creates all database tables within the application context.
+    :return: None
+    """
     with app.app_context():
         db.create_all()
 
+
 @app.route('/')
 def home():
+    """
+    Displays the home page with a list of books that can be sorted and searched.
+    Supports sorting by title, year, or author and text-based search functionality.
+    :return: Rendered HTML page with book list, sorting options, and search results
+    """
     sort_by = request.args.get('sort_by', 'title')
     search_query = request.args.get('search', '').strip()
 
@@ -39,11 +50,17 @@ def home():
     elif sort_by == 'author':
         books_query = books_query.order_by(Author.name.asc()).all()
 
-
     return render_template('home.html', books=books_query, sort_by=sort_by, search_query=search_query)
+
 
 @app.route('/add_author', methods=['GET', 'POST'])
 def add_author():
+    """
+    Handles GET and POST requests for adding a new author.
+    GET: Displays the add author form.
+    POST: Processes form data and creates a new author in the database.
+    :return: Rendered HTML page with form or success message
+    """
     if request.method == 'POST':
         name = request.form.get('name')
         birth_date = request.form.get('birthdate')
@@ -74,6 +91,12 @@ def add_author():
 
 @app.route('/add_book', methods=['GET', 'POST'])
 def add_book():
+    """
+    Handles GET and POST requests for adding a new book.
+    GET: Displays the add book form with available authors.
+    POST: Processes form data, fetches book cover from API, and creates a new book.
+    :return: Rendered HTML page with form, authors list, and success/failure status
+    """
     authors = Author.query.all()
 
     if request.method == 'POST':
@@ -104,8 +127,15 @@ def add_book():
     # GET request
     return render_template('add_book.html', authors=authors, success=False)
 
+
 @app.route('/book/<int:book_id>/delete', methods=['POST'])
 def delete_book(book_id):
+    """
+    Deletes a book from the database and optionally removes the author if no other books exist.
+    Shows flash message with deletion result and redirects to home page.
+    :param book_id: ID of the book to delete
+    :return: Redirect to home page with flash message
+    """
     book = Book.query.get(book_id)
     author = book.author
 

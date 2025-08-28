@@ -3,7 +3,16 @@ from data_models import Book
 
 OPENLIBRARY_COVER_URL = "https://covers.openlibrary.org/b/id/{cover_id}-L.jpg"
 
+
 def get_book_cover(isbn, title, author) -> str:
+    """
+    Fetches a book cover image URL from the Open Library API.
+    First tries to find the cover by ISBN, then by title and author search.
+    :param isbn: ISBN of the book (with or without dashes)
+    :param title: Title of the book
+    :param author: Author name of the book
+    :return: URL string of the book cover image, or empty string if not found
+    """
     if isbn:
         isbn = str(isbn).replace("-", "").strip()
         url = f"https://openlibrary.org/isbn/{isbn}.json"
@@ -26,7 +35,7 @@ def get_book_cover(isbn, title, author) -> str:
             for book in results:
                 if "cover_i" in book:
                     if author:
-                        #validate if the book is the right one, by checking the author too
+                        # validate if the book is the right one, by checking the author too
                         if author in book.get("author_name", []):
                             print("cover by book search")
                             return OPENLIBRARY_COVER_URL.format(cover_id=book["cover_i"])
